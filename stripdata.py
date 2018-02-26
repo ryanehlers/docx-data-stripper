@@ -5,6 +5,7 @@ from copydoc import copyDoc
 blankDate = datetime.datetime(1,1,1)
 
 def stripdata(path):
+    path = pathAutoCorrect(path)
     for file in glob.glob(path + "*.docx"):
         filename = os.path.basename(file)
         print('Copying', filename)
@@ -13,6 +14,14 @@ def stripdata(path):
         copyDoc(doc, path, filename)
 
     print('Finished.')
+
+def pathAutoCorrect(path):
+    if '\\' in path and not path.endswith('\\'):
+        return path + '\\'
+    elif '/' in path and not path.endswith('/'):
+        return path + '/'
+    else:
+        return path
 
 def clearDataOnDoc(doc):
     print('Clearing data on copy.')
